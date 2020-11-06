@@ -4,5 +4,5 @@ plugins {
 }
 
 dependencies {
-    implementation(Deps.dagger)
+    compileOnly(Deps.dagger)
 }

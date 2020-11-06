@@ -5,7 +5,11 @@ object Deps {
 
     const val bintrayGradlePlugin = "com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.bintray}"
 
-    const val ktlint = "com.pinterest:ktlint:${Versions.ktlint}"
+    object androidx {
+        const val fragment = "androidx.fragment:fragment:${Versions.androidx.fragment}"
+    }
 
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
+
+    const val ktlint = "com.pinterest:ktlint:${Versions.ktlint}"
 }

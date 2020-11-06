@@ -11,6 +11,10 @@ object Versions {
         const val buildTools = "30.0.2"
     }
 
+    object androidx {
+        const val fragment = "1.2.5"
+    }
+
     const val bintray = "1.8.5"
 
     const val ktlint = "0.39.0"
