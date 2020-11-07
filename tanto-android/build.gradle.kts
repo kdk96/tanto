@@ -2,7 +2,14 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("ktlint-plugin")
+    id("publish-plugin")
 }
+
+val tantoGroup = findProperty("group") as String
+val tantoVersion = findProperty("version") as String
+
+version = tantoGroup
+group = tantoVersion
 
 android {
     compileSdkVersion(Versions.android.compileSdk)
@@ -20,4 +27,25 @@ dependencies {
     compileOnly(Deps.dagger)
 
     compileOnly(Deps.androidx.fragment)
+}
+
+val sourcesJar by tasks.creating(Jar::class) {
+    archiveClassifier.set("sources")
+    from(android.sourceSets.getByName("main").java.srcDirs)
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>(Publications.tantoAndroid) {
+                groupId = tantoGroup
+                artifactId = Publications.tantoAndroid
+                version = tantoVersion
+
+                from(components["release"])
+
+                artifact(sourcesJar)
+            }
+        }
+    }
 }
