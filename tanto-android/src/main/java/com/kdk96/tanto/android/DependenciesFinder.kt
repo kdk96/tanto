@@ -1,16 +1,21 @@
 package com.kdk96.tanto.android
 
 import android.content.Context
+import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.kdk96.tanto.ComponentDependencies
-import com.kdk96.tanto.HasChildDependencies
+import com.kdk96.tanto.DependenciesOwner
 
 inline fun <reified T : ComponentDependencies> Context.findComponentDependencies(): T =
     findComponentDependencies(T::class.java)
 
 fun <T : ComponentDependencies> Context.findComponentDependencies(clazz: Class<T>): T =
-    applicationContext?.findDependencies(clazz)
-        ?: throw IllegalStateException("Can't find suitable ${HasChildDependencies::class.java.simpleName} for $this")
+    (applicationContext as? DependenciesOwner)?.dependencies
+        ?.takeIf(clazz::isInstance)
+        ?.let(clazz::cast)
+        ?: throw IllegalStateException("Can't find suitable ${DependenciesOwner::class.java.simpleName} for $this")
 
 inline fun <reified T : ComponentDependencies> Fragment.findComponentDependencies(): T =
     findComponentDependencies(T::class.java)
@@ -18,13 +23,17 @@ inline fun <reified T : ComponentDependencies> Fragment.findComponentDependencie
 fun <T : ComponentDependencies> Fragment.findComponentDependencies(clazz: Class<T>): T =
     findDependenciesFromParentRecursively(clazz)
         ?: activity?.findDependencies(clazz)
-        ?: activity?.application?.findDependencies(clazz)
-        ?: throw IllegalStateException("Can't find suitable ${HasChildDependencies::class.java.simpleName} for $this")
+        ?: activity?.findComponentDependencies(clazz)
+        ?: throw IllegalStateException("Can't find suitable ${DependenciesOwner::class.java.simpleName} for $this")
 
 private fun <T : ComponentDependencies> Fragment.findDependenciesFromParentRecursively(clazz: Class<T>): T? {
     var depsProviderFragment = parentFragment
     while (depsProviderFragment != null) {
-        val deps = depsProviderFragment.findDependencies(clazz)
+        val deps = depsProviderFragment.viewModels<InjectorHolderViewModel<*>>()
+            .value
+            .injector
+            ?.takeIf(clazz::isInstance)
+            ?.let(clazz::cast)
         if (deps != null) {
             return deps
         }
@@ -33,9 +42,9 @@ private fun <T : ComponentDependencies> Fragment.findDependenciesFromParentRecur
     return null
 }
 
-private fun <T : ComponentDependencies> Any.findDependencies(clazz: Class<T>): T? {
-    if (this !is HasChildDependencies) return null
-    return dependencies[clazz]
+private fun <T : ComponentDependencies> ComponentActivity.findDependencies(clazz: Class<T>): T? =
+    viewModels<InjectorHolderViewModel<*>>()
+        .value
+        .injector
         ?.takeIf(clazz::isInstance)
         ?.let(clazz::cast)
-}

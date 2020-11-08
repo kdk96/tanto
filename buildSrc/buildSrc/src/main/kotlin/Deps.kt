@@ -6,7 +6,7 @@ object Deps {
     const val bintrayGradlePlugin = "com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.bintray}"
 
     object androidx {
-        const val fragment = "androidx.fragment:fragment:${Versions.androidx.fragment}"
+        const val fragment = "androidx.fragment:fragment-ktx:${Versions.androidx.fragment}"
     }
 
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
