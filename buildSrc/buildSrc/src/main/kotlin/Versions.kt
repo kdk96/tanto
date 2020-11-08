@@ -12,7 +12,11 @@ object Versions {
     }
 
     object androidx {
+        const val appCompat = "1.2.0"
+        const val core = "1.3.2"
         const val fragment = "1.2.5"
+        const val material = "1.2.1"
+        const val preference = "1.1.1"
     }
 
     const val bintray = "1.8.5"

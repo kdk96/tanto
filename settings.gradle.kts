@@ -2,5 +2,6 @@ rootProject.name = "tanto"
 
 include(
     ":tanto",
-    ":tanto-android"
+    ":tanto-android",
+    ":tanto-sample"
 )
