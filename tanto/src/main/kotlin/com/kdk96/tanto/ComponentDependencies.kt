@@ -1,7 +1,7 @@
 package com.kdk96.tanto
 
-interface ComponentDependencies
+public interface ComponentDependencies
 
-interface DependenciesOwner {
-    val dependencies: ComponentDependencies
+public interface DependenciesOwner {
+    public val dependencies: ComponentDependencies
 }

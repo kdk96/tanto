@@ -2,15 +2,15 @@ package com.kdk96.tanto
 
 import java.util.Collections
 
-typealias InjectorBuildersProvider = Map<Class<*>, InjectorBuilder<*>>
+public typealias InjectorBuildersProvider = Map<Class<*>, InjectorBuilder<*>>
 
-object Tanto {
+public object Tanto {
 
     @Volatile
-    lateinit var builders: InjectorBuildersProvider
+    public lateinit var builders: InjectorBuildersProvider
         private set
 
-    fun initBuilders(builders: InjectorBuildersProvider) {
+    public fun initBuilders(builders: InjectorBuildersProvider) {
         if (this::builders.isInitialized) {
             throw IllegalStateException("builders have already been initialized")
         } else {
@@ -26,7 +26,7 @@ object Tanto {
 }
 
 @Suppress("UNCHECKED_CAST")
-fun <T : Any> T.inject() {
+public fun <T : Any> T.inject() {
     val injectorBuilder = Tanto.builders[javaClass] as? InjectorBuilder<T>
         ?: throw IllegalStateException("Can't find suitable ${InjectorBuilder::class.java.simpleName} for $this")
     injectorBuilder.build(this).inject(this)

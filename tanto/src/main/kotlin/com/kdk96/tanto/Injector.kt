@@ -1,5 +1,5 @@
 package com.kdk96.tanto
 
-interface Injector<T : Any> {
-    fun inject(target: T)
+public interface Injector<T : Any> {
+    public fun inject(target: T)
 }

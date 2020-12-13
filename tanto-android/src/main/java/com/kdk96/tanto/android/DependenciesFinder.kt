@@ -7,19 +7,19 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.kdk96.tanto.ComponentDependencies
 import com.kdk96.tanto.DependenciesOwner
 
-inline fun <reified T : ComponentDependencies> Context.findComponentDependencies(): T =
+public inline fun <reified T : ComponentDependencies> Context.findComponentDependencies(): T =
     findComponentDependencies(T::class.java)
 
-fun <T : ComponentDependencies> Context.findComponentDependencies(clazz: Class<T>): T =
+public fun <T : ComponentDependencies> Context.findComponentDependencies(clazz: Class<T>): T =
     (applicationContext as? DependenciesOwner)?.dependencies
         ?.takeIf(clazz::isInstance)
         ?.let(clazz::cast)
         ?: throw IllegalStateException("Can't find suitable ${DependenciesOwner::class.java.simpleName} for $this")
 
-inline fun <reified T : ComponentDependencies> Fragment.findComponentDependencies(): T =
+public inline fun <reified T : ComponentDependencies> Fragment.findComponentDependencies(): T =
     findComponentDependencies(T::class.java)
 
-fun <T : ComponentDependencies> Fragment.findComponentDependencies(clazz: Class<T>): T =
+public fun <T : ComponentDependencies> Fragment.findComponentDependencies(clazz: Class<T>): T =
     findDependenciesFromParentRecursively(clazz)
         ?: activity?.findDependencies(clazz)
         ?: activity?.findComponentDependencies(clazz)

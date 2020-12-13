@@ -10,6 +10,10 @@ val tantoVersion = findProperty("version") as String
 version = tantoGroup
 group = tantoVersion
 
+kotlin {
+    explicitApi()
+}
+
 dependencies {
     compileOnly(Deps.dagger)
 }
