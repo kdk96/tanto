@@ -17,12 +17,15 @@ android {
 
     defaultConfig {
         minSdkVersion(Versions.android.minSdk)
-        targetSdkVersion(Versions.android.targetSdk)
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    libraryVariants.all {
+        generateBuildConfigProvider.configure { enabled = false }
     }
 
     kotlinOptions {
@@ -53,7 +56,7 @@ afterEvaluate {
                 artifactId = Publications.tantoAndroid
                 version = tantoVersion
 
-                from(components["release"])
+                from(components["debug"])
 
                 artifact(sourcesJar)
             }
