@@ -1,10 +1,9 @@
 package com.kdk96.tanto.android
 
 import android.content.Context
-import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import com.kdk96.tanto.ComponentDependencies
 import com.kdk96.tanto.DependenciesOwner
 
@@ -26,25 +25,14 @@ fun <T : ComponentDependencies> Fragment.findComponentDependencies(clazz: Class<
         ?: activity?.findComponentDependencies(clazz)
         ?: throw IllegalStateException("Can't find suitable ${DependenciesOwner::class.java.simpleName} for $this")
 
-private fun <T : ComponentDependencies> Fragment.findDependenciesFromParentRecursively(clazz: Class<T>): T? {
-    var depsProviderFragment = parentFragment
-    while (depsProviderFragment != null) {
-        val deps = depsProviderFragment.viewModels<InjectorHolderViewModel<*>>()
-            .value
-            .injector
-            ?.takeIf(clazz::isInstance)
-            ?.let(clazz::cast)
-        if (deps != null) {
-            return deps
-        }
-        depsProviderFragment = depsProviderFragment.parentFragment
-    }
-    return null
+private tailrec fun <T : ComponentDependencies> Fragment.findDependenciesFromParentRecursively(clazz: Class<T>): T? {
+    val dependenciesProviderFragment = parentFragment ?: return null
+    return dependenciesProviderFragment.findDependencies(clazz)
+        ?: dependenciesProviderFragment.findDependenciesFromParentRecursively(clazz)
 }
 
-private fun <T : ComponentDependencies> ComponentActivity.findDependencies(clazz: Class<T>): T? =
-    viewModels<InjectorHolderViewModel<*>>()
-        .value
+private fun <T : ComponentDependencies> ViewModelStoreOwner.findDependencies(clazz: Class<T>): T? =
+    ViewModelProvider(this).get<InjectorKeeperViewModel<*>>()
         .injector
         ?.takeIf(clazz::isInstance)
         ?.let(clazz::cast)

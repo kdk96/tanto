@@ -15,7 +15,11 @@ object Tanto {
             throw IllegalStateException("builders have already been initialized")
         } else {
             synchronized(this) {
-                this.builders = Collections.unmodifiableMap(builders.toMap())
+                if (this::builders.isInitialized) {
+                    throw IllegalStateException("builders have already been initialized")
+                } else {
+                    this.builders = Collections.unmodifiableMap(builders.toMap())
+                }
             }
         }
     }

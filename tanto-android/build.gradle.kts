@@ -35,7 +35,8 @@ dependencies {
 
     compileOnly(Deps.dagger)
 
-    compileOnly(Deps.androidx.fragmentKtx)
+    compileOnly(Deps.androidx.lifecycleViewModel)
+    compileOnly(Deps.androidx.fragment)
 }
 
 val sourcesJar by tasks.creating(Jar::class) {
