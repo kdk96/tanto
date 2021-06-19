@@ -1,7 +1,7 @@
 object Versions {
     const val kotlin = "1.4.32"
 
-    const val dagger = "2.30.1"
+    const val dagger = "2.37"
 
     object android {
         const val gradlePlugin = "4.2.1"
@@ -12,11 +12,11 @@ object Versions {
     }
 
     object androidx {
-        const val appCompat = "1.2.0"
-        const val core = "1.3.2"
-        const val lifecycle = "2.2.0"
-        const val fragment = "1.2.5"
-        const val material = "1.2.1"
+        const val appCompat = "1.3.0"
+        const val core = "1.5.0"
+        const val lifecycle = "2.3.1"
+        const val fragment = "1.3.5"
+        const val material = "1.3.0"
         const val preference = "1.1.1"
     }
 
