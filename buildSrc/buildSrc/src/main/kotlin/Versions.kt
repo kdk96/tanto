@@ -1,10 +1,10 @@
 object Versions {
-    const val kotlin = "1.4.21"
+    const val kotlin = "1.4.32"
 
     const val dagger = "2.30.1"
 
     object android {
-        const val gradlePlugin = "4.1.1"
+        const val gradlePlugin = "4.2.1"
         const val minSdk = 21
         const val compileSdk = 30
         const val targetSdk = 30
