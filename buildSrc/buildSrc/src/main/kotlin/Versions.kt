@@ -20,7 +20,5 @@ object Versions {
         const val preference = "1.1.1"
     }
 
-    const val bintray = "1.8.5"
-
-    const val ktlint = "0.39.0"
+    const val ktlint = "0.41.0"
 }

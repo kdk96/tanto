@@ -3,8 +3,6 @@ object Deps {
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.android.gradlePlugin}"
 
-    const val bintrayGradlePlugin = "com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.bintray}"
-
     object androidx {
         const val appCompat = "androidx.appcompat:appcompat:${Versions.androidx.appCompat}"
         const val coreKtx = "androidx.core:core-ktx:${Versions.androidx.core}"

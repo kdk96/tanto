@@ -4,13 +4,12 @@ plugins {
 
 repositories {
     google()
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
     implementation(Deps.androidGradlePlugin)
     implementation(Deps.kotlinGradlePlugin)
-    implementation(Deps.bintrayGradlePlugin)
 }
 
 kotlin {
@@ -22,9 +21,5 @@ gradlePlugin {
     plugins.register("ktlint-plugin") {
         id = "ktlint-plugin"
         implementationClass = "ktlint.KtlintPlugin"
-    }
-    plugins.register("publish-plugin") {
-        id = "publish-plugin"
-        implementationClass = "publish.PublishPlugin"
     }
 }
